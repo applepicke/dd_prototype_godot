@@ -23,15 +23,16 @@ func _ready():
 	sprite = find_node("Sprite")
 
 func _process(delta):
-	motion.x = Input.get_joy_axis(0, 0)
+	motion.x = 0
+	var x = Input.get_joy_axis(0, 0)
 	var flip_h = -1 if sprite.flip_h else 1 
 	
 	var light_attack_pressed = Input.is_action_just_pressed("light_attack")
 	var heavy_attack_pressed = Input.is_action_just_pressed("heavy_attack")
 	var roll_pressed = Input.is_action_just_pressed("roll")
 	
-	if abs(motion.x) < deadzone:
-		motion = Vector2()
+	if abs(x) < deadzone:
+		x = 0
 	
 	if light_attack_pressed:
 		change_state(SM.LightAttack)
@@ -51,8 +52,9 @@ func _process(delta):
 		move_and_slide(Vector2(flip_h, 0) * roll_speed)
 		yield(animator, "animation_finished")
 		change_state(SM.Idle)
-	elif motion.x != 0:
-		sprite.set_flip_h(motion.x < 0)
+	elif x != 0:
+		motion.x = x
+		sprite.set_flip_h(x < 0)
 		move_and_slide(motion * move_speed)
 		change_state(SM.Run)
 	else:

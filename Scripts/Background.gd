@@ -14,6 +14,7 @@ func _process(delta):
 	
 	if player_x > (tile_x + TILE_WIDTH/2):
 		var swap = tiles[0]
+		swap.reset_positions()
 		swap.transform.origin = Vector2(tiles[2].transform.origin.x + TILE_WIDTH, swap.transform.origin.y)
 		tiles[0] = tiles[1]
 		tiles[1] = tiles[2] 
@@ -21,6 +22,7 @@ func _process(delta):
 		
 	if player_x < (tile_x - TILE_WIDTH/2):
 		var swap = tiles[2]
+		swap.reset_positions()
 		swap.transform.origin = Vector2(tiles[0].transform.origin.x - TILE_WIDTH, swap.transform.origin.y)
 		tiles[2] = tiles[1]
 		tiles[1] = tiles[0]
