@@ -29,58 +29,22 @@ func _ready():
 	animator = find_node("AnimationPlayer")
 	sprite = find_node("Sprite")
 
-# func _input(event):
-# 	if event.is_action_pressed("jump"):
-# 		speed_y = -JUMP_FORCE
-
-func _physics_process(delta):
-	motion.x = 0
-	var x = Input.get_joy_axis(0, 0)
-	var flip_h = -1 if sprite.flip_h else 1
-
-	var light_attack_pressed = Input.is_action_just_pressed("light_attack")
-	var heavy_attack_pressed = Input.is_action_just_pressed("heavy_attack")
-	var roll_pressed = Input.is_action_just_pressed("roll")
-	var jump_pressed = Input.is_action_just_pressed("jump")
-
-	if abs(x) < deadzone:
-		x = 0
-
-	if light_attack_pressed:
-		change_state(SM.LightAttack)
-	if heavy_attack_pressed:
-		change_state(SM.HeavyAttack)
-	if roll_pressed:
-		change_state(SM.Roll)
-	if jump_pressed and current_state != SM.Jump:
+func _input(event):
+	if event.is_action_pressed("jump"):
 		speed_y = -JUMP_FORCE
 		jumping = true
 		change_state(SM.Jump)
+	if event.is_action_pressed("light_attack"):
+		change_state(SM.LightAttack)
+	if event.is_action_pressed("heavy_attack"):
+		change_state(SM.HeavyAttack)
+	if event.is_action_pressed("roll"):
+		change_state(SM.Roll)
 
-	# set speeds
-	match current_state:
-		SM.Roll:
-			speed_x = flip_h * roll_speed
-		SM.LightAttack:
-			motion.x = 0
-		SM.HeavyAttack:
-			motion.x = 0
-		SM.Jump:
-			pass
-		_:
-			if x != 0:
-				sprite.set_flip_h(x < 0)
-				speed_x = x * move_speed * delta
-			else:
-				speed_x = 0
-
-
-	speed_y += GRAVITY * delta
-
-	motion.y = speed_y * delta
-	motion.x = speed_x * delta
-
-	move_and_slide(motion)
+func _process(delta):
+	var x = Input.get_joy_axis(0, 0)
+	if abs(x) < deadzone:
+		x = 0
 
 	# block animations
 	match current_state:
@@ -104,6 +68,42 @@ func _physics_process(delta):
 				if not jumping:
 					change_state(SM.Idle)
 
+func _physics_process(delta):
+	motion.x = 0
+	var x = Input.get_joy_axis(0, 0)
+	var flip_h = -1 if sprite.flip_h else 1
+
+	if abs(x) < deadzone:
+		x = 0
+
+	# set speeds
+	match current_state:
+		SM.Roll:
+			speed_x = flip_h * roll_speed
+		SM.LightAttack:
+			speed_x = 0
+			if jumping:
+				move_x(x, delta)
+		SM.HeavyAttack:
+			speed_x = 0
+			if jumping:
+				move_x(x, delta)
+		_:
+			move_x(x, delta)
+
+	speed_y += GRAVITY * delta
+
+	motion.y = speed_y * delta
+	motion.x = speed_x * delta
+
+	move_and_slide(motion)
+
+func move_x(x, delta):
+	if x != 0:
+		sprite.set_flip_h(x < 0)
+		speed_x = x * move_speed * delta
+	else:
+		speed_x = 0
 
 func change_state(state):
 	if current_state == state:

@@ -16,7 +16,7 @@
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=14]
 [ext_resource path="res://Sprites/Characters/Vampire_SpriteSheet.png" type="Texture" id=15]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=1]
 
 length = 1.6
 loop = false
@@ -34,7 +34,7 @@ tracks/0/keys = {
 "values": [ 40, 55 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 
 length = 1.0
 loop = false
@@ -52,7 +52,7 @@ tracks/0/keys = {
 "values": [ 20, 30 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=3]
 
 length = 1.0
 loop = true
@@ -70,7 +70,7 @@ tracks/0/keys = {
 "values": [ 0, 6 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=4]
 
 length = 1.0
 loop = false
@@ -88,7 +88,7 @@ tracks/0/keys = {
 "values": [ 70, 77 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 
 length = 1.0
 loop = false
@@ -106,7 +106,7 @@ tracks/0/keys = {
 "values": [ 30, 40 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=6]
 
 length = 0.6
 loop = false
@@ -124,7 +124,7 @@ tracks/0/keys = {
 "values": [ 60, 70 ]
 }
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=7]
 
 length = 0.8
 loop = true
@@ -142,12 +142,12 @@ tracks/0/keys = {
 "values": [ 10, 20 ]
 }
 
-[sub_resource type="CircleShape2D" id=11]
+[sub_resource type="CircleShape2D" id=8]
 
 custom_solver_bias = 0.0
 radius = 10.0
 
-[sub_resource type="RectangleShape2D" id=12]
+[sub_resource type="RectangleShape2D" id=9]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -357,13 +357,13 @@ autoplay = "idle"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/death = SubResource( 4 )
-anims/heavy_attack = SubResource( 5 )
-anims/idle = SubResource( 6 )
-anims/jump = SubResource( 7 )
-anims/light_attack = SubResource( 8 )
-anims/roll = SubResource( 9 )
-anims/run = SubResource( 10 )
+anims/death = SubResource( 1 )
+anims/heavy_attack = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/jump = SubResource( 4 )
+anims/light_attack = SubResource( 5 )
+anims/roll = SubResource( 6 )
+anims/run = SubResource( 7 )
 blend_times = [  ]
 _sections_unfolded = [ "Pause", "Playback Options" ]
 
@@ -380,7 +380,7 @@ _sections_unfolded = [ "Animation", "Transform" ]
 
 position = Vector2( -3.38416, 16.9071 )
 scale = Vector2( 1.52369, 1.9195 )
-shape = SubResource( 11 )
+shape = SubResource( 8 )
 
 [node name="Ground" type="Node2D" parent="." index="2"]
 
@@ -400,7 +400,7 @@ bounce = 0.0
 
 position = Vector2( 49.9363, 371.133 )
 scale = Vector2( 135.277, 3.48445 )
-shape = SubResource( 12 )
+shape = SubResource( 9 )
 _sections_unfolded = [ "Transform" ]
 
 
