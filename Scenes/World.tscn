@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Scripts/Background.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/BackgroundTile.gd" type="Script" id=2]
@@ -16,9 +16,8 @@
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=14]
 [ext_resource path="res://Sprites/Characters/Vampire_SpriteSheet.png" type="Texture" id=15]
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=4]
 
-resource_name = "death"
 length = 1.6
 loop = false
 step = 0.1
@@ -33,62 +32,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ 40, 55 ]
-}
-
-[sub_resource type="Animation" id=2]
-
-resource_name = "heavy_attack"
-length = 1.0
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 20, 30 ]
-}
-
-[sub_resource type="Animation" id=3]
-
-length = 1.0
-loop = true
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0, 6 ]
-}
-
-[sub_resource type="Animation" id=4]
-
-resource_name = "jump"
-length = 1.0
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 70, 77 ]
 }
 
 [sub_resource type="Animation" id=5]
@@ -106,12 +49,65 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 30, 40 ]
+"values": [ 20, 30 ]
 }
 
 [sub_resource type="Animation" id=6]
 
-resource_name = "roll"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 6 ]
+}
+
+[sub_resource type="Animation" id=7]
+
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 70, 77 ]
+}
+
+[sub_resource type="Animation" id=8]
+
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 30, 40 ]
+}
+
+[sub_resource type="Animation" id=9]
+
 length = 0.6
 loop = false
 step = 0.1
@@ -128,7 +124,7 @@ tracks/0/keys = {
 "values": [ 60, 70 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=10]
 
 length = 0.8
 loop = true
@@ -146,15 +142,25 @@ tracks/0/keys = {
 "values": [ 10, 20 ]
 }
 
+[sub_resource type="CircleShape2D" id=11]
+
+custom_solver_bias = 0.0
+radius = 10.0
+
+[sub_resource type="RectangleShape2D" id=12]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
 [node name="World" type="Node" index="0"]
 
 [node name="Background" type="Node2D" parent="." index="0"]
 
+editor/display_folded = true
 script = ExtResource( 1 )
 
 [node name="Tile3" type="Node2D" parent="Background" index="0"]
 
-editor/display_folded = true
 position = Vector2( 928, 0 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
@@ -206,7 +212,6 @@ texture = ExtResource( 13 )
 
 [node name="Tile2" type="Node2D" parent="Background" index="1"]
 
-editor/display_folded = true
 script = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
@@ -257,7 +262,6 @@ texture = ExtResource( 13 )
 
 [node name="Tile1" type="Node2D" parent="Background" index="2"]
 
-editor/display_folded = true
 position = Vector2( -928, 0 )
 script = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
@@ -309,7 +313,7 @@ texture = ExtResource( 13 )
 
 [node name="Player" type="KinematicBody2D" parent="." index="1"]
 
-position = Vector2( 0, 320 )
+position = Vector2( -4.41187, 297.597 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -353,13 +357,13 @@ autoplay = "idle"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/death = SubResource( 1 )
-anims/heavy_attack = SubResource( 2 )
-anims/idle = SubResource( 3 )
-anims/jump = SubResource( 4 )
-anims/light_attack = SubResource( 5 )
-anims/roll = SubResource( 6 )
-anims/run = SubResource( 7 )
+anims/death = SubResource( 4 )
+anims/heavy_attack = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/jump = SubResource( 7 )
+anims/light_attack = SubResource( 8 )
+anims/roll = SubResource( 9 )
+anims/run = SubResource( 10 )
 blend_times = [  ]
 _sections_unfolded = [ "Pause", "Playback Options" ]
 
@@ -371,5 +375,32 @@ vframes = 8
 hframes = 10
 frame = 77
 _sections_unfolded = [ "Animation", "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" index="3"]
+
+position = Vector2( -3.38416, 16.9071 )
+scale = Vector2( 1.52369, 1.9195 )
+shape = SubResource( 11 )
+
+[node name="Ground" type="Node2D" parent="." index="2"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Ground" index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground/StaticBody2D" index="0"]
+
+position = Vector2( 49.9363, 371.133 )
+scale = Vector2( 135.277, 3.48445 )
+shape = SubResource( 12 )
+_sections_unfolded = [ "Transform" ]
 
 
