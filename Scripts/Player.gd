@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+var GRAVITY = 50
 var deadzone = 0.5
 var motion = Vector2()
 var move_speed = 250
@@ -25,14 +26,10 @@ func _ready():
 func _process(delta):
 	motion.x = 0
 	var x = Input.get_joy_axis(0, 0)
-	var flip_h = -1 if sprite.flip_h else 1 
-	
 	var light_attack_pressed = Input.is_action_just_pressed("light_attack")
 	var heavy_attack_pressed = Input.is_action_just_pressed("heavy_attack")
 	var roll_pressed = Input.is_action_just_pressed("roll")
-	
-	if abs(x) < deadzone:
-		x = 0
+
 	
 	if light_attack_pressed:
 		change_state(SM.LightAttack)
@@ -41,7 +38,6 @@ func _process(delta):
 	if roll_pressed:
 		change_state(SM.Roll)
 		
-		
 	if current_state == SM.LightAttack:
 		yield(animator, "animation_finished")
 		change_state(SM.Idle)
@@ -49,16 +45,25 @@ func _process(delta):
 		yield(animator, "animation_finished")
 		change_state(SM.Idle)
 	elif current_state == SM.Roll:
-		move_and_slide(Vector2(flip_h, 0) * roll_speed)
 		yield(animator, "animation_finished")
 		change_state(SM.Idle)
-	elif x != 0:
-		motion.x = x
+	elif abs(x) > deadzone:
+		motion.x = x * move_speed
 		sprite.set_flip_h(x < 0)
-		move_and_slide(motion * move_speed)
 		change_state(SM.Run)
 	else:
 		change_state(SM.Idle)
+		
+		
+func _physics_process(delta):
+	motion.y = delta + 10 * GRAVITY
+	
+	var flip_h = -1 if sprite.flip_h else 1 
+		
+	if current_state == SM.Roll:
+		move_and_slide(Vector2(flip_h, 0) * roll_speed)
+		
+	move_and_slide(motion)
 		
 		
 func change_state(state):

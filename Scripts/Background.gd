@@ -8,7 +8,7 @@ func _ready():
 	tiles = [get_node("Tile1"), get_node("Tile2"), get_node("Tile3")]
 	player = get_node("../Player")
 
-func _process(delta):
+func _physics_process(delta):
 	var player_x = player.transform.origin.x
 	var tile_x = tiles[1].transform.origin.x
 	
