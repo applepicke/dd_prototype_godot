@@ -10,7 +10,7 @@ func _ready():
 	ground = get_node("../Ground/StaticBody2D/CollisionShape2D")
 	player = get_node("../Player")
 
-func _process(delta):
+func _physics_process(delta):
 	var player_x = player.transform.origin.x
 	var tile_x = tiles[1].transform.origin.x
 

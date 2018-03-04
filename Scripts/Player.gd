@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+var GRAVITY = 50
 var deadzone = 0.5
 var motion = Vector2()
 var move_speed = 1000000

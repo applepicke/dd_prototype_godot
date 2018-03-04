@@ -21,7 +21,7 @@ func _ready():
 	player = get_node("../../Player")
 	camera = get_node("../../Player/Camera2D")
 
-func _process(delta):
+func _physics_process(delta):
 	var new_x = camera.get_camera_position().x
 	var x = new_x - last_camera_x
 	last_camera_x = new_x
