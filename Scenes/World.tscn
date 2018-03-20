@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scripts/Background.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/BackgroundTile.gd" type="Script" id=2]
@@ -15,57 +15,38 @@
 [ext_resource path="res://Sprites/Backgrounds/Forest/Layer_0000_9.png" type="Texture" id=13]
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=14]
 [ext_resource path="res://Sprites/Characters/Vampire_SpriteSheet.png" type="Texture" id=15]
+[ext_resource path="res://Scripts/Player/Idle.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/Player/Run.gd" type="Script" id=17]
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 12.0065, 10 )
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="CircleShape2D" id=2]
 
-resource_name = "death"
+custom_solver_bias = 0.0
+radius = 10.0
+
+[sub_resource type="Animation" id=3]
+
 length = 1.6
 loop = false
 step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 40, 55 ]
-}
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=4]
 
-resource_name = "heavy_attack"
 length = 1.0
 loop = false
 step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 20, 30 ]
-}
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 
 length = 1.0
 loop = true
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -74,72 +55,34 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0, 6 ]
-}
-
-[sub_resource type="Animation" id=4]
-
-resource_name = "jump"
-length = 1.0
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 70, 77 ]
-}
-
-[sub_resource type="Animation" id=5]
-
-length = 1.0
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 30, 40 ]
+"values": [ 0, 5 ]
 }
 
 [sub_resource type="Animation" id=6]
 
-resource_name = "roll"
+length = 1.0
+loop = false
+step = 0.1
+
+[sub_resource type="Animation" id=7]
+
+length = 1.0
+loop = false
+step = 0.1
+
+[sub_resource type="Animation" id=8]
+
 length = 0.6
 loop = false
 step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 60, 70 ]
-}
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=9]
 
 length = 0.8
 loop = true
 step = 0.1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
+tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -148,13 +91,8 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.8 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 10, 20 ]
+"values": [ 10, 19 ]
 }
-
-[sub_resource type="CircleShape2D" id=8]
-
-custom_solver_bias = 0.0
-radius = 10.0
 
 [node name="World" type="Node" index="0"]
 
@@ -225,7 +163,7 @@ texture = ExtResource( 13 )
 
 position = Vector2( -14.4677, 365.236 )
 scale = Vector2( 51.3572, 1 )
-shape = SubResource( 9 )
+shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Tile2" type="StaticBody2D" parent="Background" index="1"]
@@ -289,7 +227,7 @@ texture = ExtResource( 13 )
 
 position = Vector2( -129.125, 365.236 )
 scale = Vector2( 51.3572, 1 )
-shape = SubResource( 9 )
+shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Tile1" type="StaticBody2D" parent="Background" index="2"]
@@ -354,7 +292,7 @@ texture = ExtResource( 13 )
 
 position = Vector2( 13.5533, 366.743 )
 scale = Vector2( 51.3572, 1 )
-shape = SubResource( 9 )
+shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Player" type="KinematicBody2D" parent="." index="1"]
@@ -370,7 +308,16 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Camera2D" type="Camera2D" parent="Player" index="0"]
+[node name="Sprite" type="Sprite" parent="Player" index="0"]
+
+position = Vector2( 0, -16 )
+texture = ExtResource( 15 )
+vframes = 8
+hframes = 10
+frame = 10
+_sections_unfolded = [ "Animation", "Transform" ]
+
+[node name="Camera2D" type="Camera2D" parent="Player" index="1"]
 
 offset = Vector2( 0, -220 )
 anchor_mode = 1
@@ -396,36 +343,37 @@ editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Player" index="1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" index="2"]
 
-root_node = NodePath("..")
+position = Vector2( -2.36644, 11.4292 )
+scale = Vector2( 2.20256, 2.20255 )
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player" index="3"]
+
+root_node = NodePath("../Sprite")
 autoplay = "idle"
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/death = SubResource( 1 )
-anims/heavy_attack = SubResource( 2 )
-anims/idle = SubResource( 3 )
-anims/jump = SubResource( 4 )
-anims/light_attack = SubResource( 5 )
-anims/roll = SubResource( 6 )
-anims/run = SubResource( 7 )
+anims/death = SubResource( 3 )
+anims/heavy_attack = SubResource( 4 )
+anims/idle = SubResource( 5 )
+anims/jump = SubResource( 6 )
+anims/light_attack = SubResource( 7 )
+anims/roll = SubResource( 8 )
+anims/run = SubResource( 9 )
 blend_times = [  ]
 _sections_unfolded = [ "Pause", "Playback Options" ]
 
-[node name="Sprite" type="Sprite" parent="Player" index="2"]
+[node name="States" type="Node2D" parent="Player" index="4"]
 
-position = Vector2( 0, -16 )
-texture = ExtResource( 15 )
-vframes = 8
-hframes = 10
-frame = 77
-_sections_unfolded = [ "Animation", "Transform" ]
+[node name="Idle" type="Node2D" parent="Player/States" index="0"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" index="3"]
+script = ExtResource( 16 )
 
-position = Vector2( -2.36644, 11.4292 )
-scale = Vector2( 2.20256, 2.20255 )
-shape = SubResource( 8 )
+[node name="Run" type="Node2D" parent="Player/States" index="1"]
+
+script = ExtResource( 17 )
 
 
