@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://Scripts/Background.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/BackgroundTile.gd" type="Script" id=2]
@@ -13,18 +13,53 @@
 [ext_resource path="res://Sprites/Backgrounds/Forest/Layer_0002_7.png" type="Texture" id=11]
 [ext_resource path="res://Sprites/Backgrounds/Forest/Layer_0001_8.png" type="Texture" id=12]
 [ext_resource path="res://Sprites/Backgrounds/Forest/Layer_0000_9.png" type="Texture" id=13]
-[ext_resource path="res://Scripts/Player.gd" type="Script" id=14]
-[ext_resource path="res://Sprites/Characters/Vampire_SpriteSheet.png" type="Texture" id=15]
-[ext_resource path="res://Scripts/Player/Idle.gd" type="Script" id=16]
-[ext_resource path="res://Scripts/Player/Run.gd" type="Script" id=17]
-[ext_resource path="res://Scripts/Player/Roll.gd" type="Script" id=18]
-[ext_resource path="res://Scripts/Player/LightAttack.gd" type="Script" id=19]
-[ext_resource path="res://Scripts/Player/HeavyAttack.gd" type="Script" id=20]
+[ext_resource path="res://Scripts/Enemy/Enemy.gd" type="Script" id=14]
+[ext_resource path="res://Sprites/Characters/Abomination.png" type="Texture" id=15]
+[ext_resource path="res://Scripts/Enemy/States/Idle.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/Enemy/States/Walk.gd" type="Script" id=17]
+[ext_resource path="res://Scripts/Player/Player.gd" type="Script" id=18]
+[ext_resource path="res://Sprites/Characters/Vampire_SpriteSheet.png" type="Texture" id=19]
+[ext_resource path="res://Scripts/Player/States/Idle.gd" type="Script" id=20]
+[ext_resource path="res://Scripts/Player/States/Run.gd" type="Script" id=21]
+[ext_resource path="res://Scripts/Player/States/Roll.gd" type="Script" id=22]
+[ext_resource path="res://Scripts/Player/States/LightAttack.gd" type="Script" id=23]
+[ext_resource path="res://Scripts/Player/States/HeavyAttack.gd" type="Script" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 12.0065, 10 )
+
+[sub_resource type="CircleShape2D" id=10]
+
+custom_solver_bias = 0.0
+radius = 44.7478
+
+[sub_resource type="Animation" id=11]
+
+resource_name = "idle"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 5 ]
+}
+
+[sub_resource type="Animation" id=12]
+
+resource_name = "walk"
+length = 1.0
+loop = false
+step = 0.1
 
 [sub_resource type="CircleShape2D" id=2]
 
@@ -94,7 +129,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 20, 29 ]
+"values": [ 21, 28 ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -142,6 +177,7 @@ script = ExtResource( 1 )
 
 [node name="Tile3" type="StaticBody2D" parent="Background" index="0"]
 
+editor/display_folded = true
 position = Vector2( 928, 0 )
 input_pickable = true
 collision_layer = 1
@@ -151,7 +187,7 @@ constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
 script = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
+_sections_unfolded = [ "Collision", "Transform" ]
 
 [node name="Backdrop" type="Sprite" parent="Background/Tile3" index="0"]
 
@@ -334,14 +370,61 @@ scale = Vector2( 51.3572, 1 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Player" type="KinematicBody2D" parent="." index="1"]
+[node name="Enemy" type="KinematicBody2D" parent="." index="1"]
 
-position = Vector2( -3.01465, 57.7235 )
+position = Vector2( 442, 0.811478 )
 input_pickable = false
-collision_layer = 1
+collision_layer = 2
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 14 )
+_sections_unfolded = [ "Collision" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Enemy" index="0"]
+
+texture = ExtResource( 15 )
+flip_h = true
+vframes = 8
+hframes = 6
+_sections_unfolded = [ "Animation", "Region", "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy" index="1"]
+
+position = Vector2( 4.66034, 45.1692 )
+shape = SubResource( 10 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy" index="2"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/idle = SubResource( 11 )
+anims/walk = SubResource( 12 )
+blend_times = [  ]
+
+[node name="States" type="Node2D" parent="Enemy" index="3"]
+
+[node name="Idle" type="Node2D" parent="Enemy/States" index="0"]
+
+script = ExtResource( 16 )
+
+[node name="Walk" type="Node2D" parent="Enemy/States" index="1"]
+
+script = ExtResource( 17 )
+
+[node name="Player" type="KinematicBody2D" parent="." index="2"]
+
+position = Vector2( -3.01465, 56.909 )
+input_pickable = false
+collision_layer = 2
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 18 )
 _sections_unfolded = [ "Collision", "Transform" ]
 __meta__ = {
 "_edit_group_": true
@@ -350,10 +433,10 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="Player" index="0"]
 
 position = Vector2( 0, -16 )
-texture = ExtResource( 15 )
+texture = ExtResource( 19 )
 vframes = 8
 hframes = 10
-frame = 40
+frame = 28
 _sections_unfolded = [ "Animation", "Transform" ]
 
 [node name="Camera2D" type="Camera2D" parent="Player" index="1"]
@@ -409,22 +492,22 @@ _sections_unfolded = [ "Pause", "Playback Options" ]
 
 [node name="Idle" type="Node2D" parent="Player/States" index="0"]
 
-script = ExtResource( 16 )
+script = ExtResource( 20 )
 
 [node name="Run" type="Node2D" parent="Player/States" index="1"]
 
-script = ExtResource( 17 )
+script = ExtResource( 21 )
 
 [node name="Roll" type="Node2D" parent="Player/States" index="2"]
 
-script = ExtResource( 18 )
+script = ExtResource( 22 )
 
 [node name="LightAttack" type="Node2D" parent="Player/States" index="3"]
 
-script = ExtResource( 19 )
+script = ExtResource( 23 )
 
 [node name="HeavyAttack" type="Node2D" parent="Player/States" index="4"]
 
-script = ExtResource( 20 )
+script = ExtResource( 24 )
 
 

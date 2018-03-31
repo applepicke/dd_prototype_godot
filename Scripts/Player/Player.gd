@@ -45,34 +45,12 @@ func _ready():
 
 func _process(delta):
 	state_machine.process(delta)	
-#	
-#	var light_attack_pressed = Input.is_action_just_pressed("light_attack")
-#	var heavy_attack_pressed = Input.is_action_just_pressed("heavy_attack")
-#	var roll_pressed = Input.is_action_just_pressed("roll")
-#
-#
-#	if light_attack_pressed:
-#		change_state(SM.LightAttack)
-#	if heavy_attack_pressed:
-#		change_state(SM.HeavyAttack)
-#	if roll_pressed:
-#		change_state(SM.Roll)
-#
-#	if current_state == SM.LightAttack:
-#		yield(animator, "animation_finished")
-#		change_state(SM.Idle)
-#	elif current_state == SM.HeavyAttack:
-#		yield(animator, "animation_finished")
-#		change_state(SM.Idle)
-		
-		
+
+
 func _physics_process(delta):
 	state_machine.physics_process(delta)
 	
 	motion.y = delta + 10 * GRAVITY
-	
-#	if current_state == SM.Roll:
-#		move_and_slide(Vector2(flip_h, 0) * roll_speed)
 
 	move_and_slide(motion)
 
@@ -86,23 +64,3 @@ func get_movement():
 	
 func move(x):
 	motion.x = x
-
-
-#func change_state(state):
-#	if current_state == state:
-#		return
-#
-#	match state:
-#		SM.Idle:
-#			animator.play("idle")
-#		SM.Run:
-#			animator.play("run")
-#		SM.Roll:
-#			animator.play("roll")
-#		SM.LightAttack:
-#			animator.play("light_attack")
-#		SM.HeavyAttack:
-#			animator.play("heavy_attack")
-#
-#	current_state = state
-#
