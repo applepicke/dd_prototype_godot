@@ -5,6 +5,7 @@ var player
 func ready():
 	player = self._parent
 	set_animation("idle")
+
 	
 func process(delta):
 	if player.get_movement() != 0:

@@ -15,8 +15,8 @@ func _init(parent, initial_state, animator, states):
 	
 	change_state(initial_state)
 
-func input():
-	pass
+func input(event):
+	_states[_current_state].input(event)
 
 func process(delta):
 	_states[_current_state].process(delta)
@@ -31,6 +31,4 @@ func initialize_state(state):
 func change_state(new_state):
 	if new_state != _current_state:
 		_current_state = new_state
-		print(new_state)
-		print(_states.keys())
 		_states[_current_state].state_changed()

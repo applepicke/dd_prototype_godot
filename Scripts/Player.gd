@@ -6,7 +6,7 @@ var GRAVITY = 50
 var deadzone = 0.5
 var motion = Vector2()
 var move_speed = 250
-var roll_speed = 150
+var roll_speed = 200
 
 var animator
 var sprite
@@ -23,13 +23,21 @@ enum States {
 }
 
 func _input(event):
-	pass
+	if event.is_action("roll"):
+		state_machine.change_state(States.Roll)
+	if event.is_action("light_attack"):
+		state_machine.change_state(States.LightAttack)
+	if event.is_action_pressed("heavy_attack"):
+		state_machine.change_state(States.HeavyAttack)
 
 func _ready():
 	animator = find_node('AnimationPlayer')
 	state_machine = StateMachine.new(self, Idle, animator, {
 		Idle: find_node("Idle"),
-		Run: find_node("Run")
+		Run: find_node("Run"),
+		Roll: find_node("Roll"),
+		LightAttack: find_node("LightAttack"),
+		HeavyAttack: find_node("HeavyAttack"),
 	})
 	
 	sprite = find_node("Sprite")
@@ -54,9 +62,6 @@ func _process(delta):
 #		yield(animator, "animation_finished")
 #		change_state(SM.Idle)
 #	elif current_state == SM.HeavyAttack:
-#		yield(animator, "animation_finished")
-#		change_state(SM.Idle)
-#	elif current_state == SM.Roll:
 #		yield(animator, "animation_finished")
 #		change_state(SM.Idle)
 		
